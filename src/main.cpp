@@ -14,12 +14,11 @@ int main() {
     stdio_init_all();
 
     // CAN
-    // TODO: Implement interface
-
+    Can can; // TODO: Implement interface
 
     // Analog
     Analog adc;
-    adc.init();
+    adc.init(); // TODO: Refactor & make generic interface
 
     // DAC
     MCP4922 dac(spi0, PlatformPinout::DAC_CS_PIN, PlatformPinout::DAC_TX_PIN, PlatformPinout::DAC_SCK_PIN, PlatformPinout::DAC_LDAC_PIN);
@@ -42,13 +41,14 @@ int main() {
     ControllerState state;
 
     // Error handler
+    // TODO: Implement
 
     /**
      * Orchestrator
      */
 
     // Initialize orchestrator
-    Orchestrator orchestrator;
+    Orchestrator orchestrator(&state, &can, &adc, &dac, &relay);
     orchestrator.init();
 
     // Run auxiliary orchestrator thread (CAN + USB communication)
