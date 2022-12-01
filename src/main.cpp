@@ -3,13 +3,15 @@
 #include "Hardware/Relay/Relay.hpp"
 #include "Hardware/DAC/MCP4922.hpp"
 #include "State/ControllerState.hpp"
-
-//#include "Core/Orchestrator.hpp"
+#include "Core/Orchestrator.hpp"
 
 int main() {
     /**
      * Initialize hardware
      */
+
+    // Pico
+    stdio_init_all();
 
     // CAN
     // TODO: Implement interface
@@ -30,6 +32,7 @@ int main() {
     // LED
     Relay led(PlatformPinout::LED_PIN);
     led.init();
+    led.setState(true);
 
     /**
      * Global variables
@@ -45,18 +48,14 @@ int main() {
      */
 
     // Initialize orchestrator
-//    Orchestrator orchestrator(
-////            dac,
-////            relay,
-////            led,
-//    );
-//    orchestrator.init();
-//
-//    // Run auxiliary orchestrator thread (CAN + USB communication)
-//    orchestrator.handleCommunication();
-//
-//    // Run main orchestrator thread (calculations, safety, outputs)
-//    orchestrator.handleMainTasks();
+    Orchestrator orchestrator;
+    orchestrator.init();
+
+    // Run auxiliary orchestrator thread (CAN + USB communication)
+    orchestrator.handleCommunication();
+
+    // Run main orchestrator thread (calculations, safety, outputs)
+    orchestrator.handleMainTasks();
 
     return 0;
 }

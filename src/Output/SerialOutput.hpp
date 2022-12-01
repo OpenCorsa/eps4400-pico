@@ -4,8 +4,6 @@
 #include "Output.hpp"
 
 class SerialOutput : public Output {
-
-public:
-    void output(ControllerState state);
-
+protected:
+    void outputHandler(ControllerState state);
 };

@@ -24,6 +24,11 @@ add_executable(eps4400-pico
         src/Hardware/Analog/Analog.cpp
         src/Hardware/DAC/MCP4922.cpp
         src/Hardware/Relay/Relay.cpp
+        src/Core/Orchestrator.cpp
+
+        src/Output/Output.cpp
+        src/Output/SerialOutput.cpp
+        src/Output/CanOutput.cpp
 
         )
 
@@ -40,6 +45,7 @@ pico_enable_stdio_usb(eps4400-pico 1)
 # Add any user requested libraries
 target_link_libraries(eps4400-pico
         pico_stdlib
+        pico_multicore
         hardware_spi
         hardware_adc
         hardware_pwm

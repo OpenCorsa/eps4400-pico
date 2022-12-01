@@ -7,8 +7,8 @@ class CanOutput : public Output {
 protected:
     Can interface;
 
+    void outputHandler(ControllerState state);
+
 public:
     CanOutput(Can);
-
-    void output(ControllerState state) override;
 };

@@ -4,6 +4,6 @@
  *
  * @param state
  */
-void SerialOutput::output(ControllerState state) {
+void SerialOutput::outputHandler(ControllerState state) {
     // TODO: Implement
 }

@@ -1,5 +1,8 @@
 #include "CanOutput.hpp"
 
+/**
+ *
+ */
 CanOutput::CanOutput(Can) {
 
 }
@@ -8,6 +11,6 @@ CanOutput::CanOutput(Can) {
  *
  * @param state
  */
-void CanOutput::output(ControllerState state) {
+void CanOutput::outputHandler(ControllerState state) {
     // TODO: Implement
 }
