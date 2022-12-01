@@ -1,8 +1,8 @@
 #include "Platform/PlatformPinout.hpp"
-
 #include "Hardware/Analog/Analog.hpp"
 #include "Hardware/Relay/Relay.hpp"
 #include "Hardware/DAC/MCP4922.hpp"
+#include "State/ControllerState.hpp"
 
 //#include "Core/Orchestrator.hpp"
 
@@ -36,6 +36,7 @@ int main() {
      */
 
     // Controller State
+    ControllerState state;
 
     // Error handler
 
