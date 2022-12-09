@@ -6,7 +6,7 @@
 
 class Output {
 protected:
-    uint32_t delayMilliseconds = 100;
+    uint32_t delayMilliseconds = 10;
     absolute_time_t lastOutput = nil_time;
 
     virtual void outputHandler(ControllerState state);

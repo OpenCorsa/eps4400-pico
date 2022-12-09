@@ -7,8 +7,24 @@ class CanOutput : public Output {
 protected:
     Can interface;
 
-    void outputHandler(ControllerState state);
+    /**
+     *
+     * @param state
+     */
+    void outputHandler(ControllerState state) {
+        // Create new frame
 
+        // Send
+        //this->interface->send()
+    };
+    
 public:
-    CanOutput(Can);
+
+    /**
+     *
+     * @param interface
+     */
+    CanOutput(Can interface) {
+        this->interface = interface;
+    };
 };

@@ -1,9 +1,17 @@
 #pragma once
 
 #include <iostream>
-#include "Output.hpp"
+#include "JsonFormatter.hpp"
 
-class SerialOutput : public Output {
+class SerialOutput : public JsonFormatter {
 protected:
-    void outputHandler(ControllerState state);
+
+    /**
+     * Output JSON format to serial
+     *
+     * @param state
+     */
+    void outputHandler(ControllerState state) {
+        std::cout << this->formatJson(state) << "\n" << std::flush;
+    }
 };
