@@ -1,0 +1,5 @@
+#pramga once
+
+class PlatformWatchdog {
+
+};
