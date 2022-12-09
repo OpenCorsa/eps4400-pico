@@ -1,10 +1,34 @@
 #include "Platform/PlatformPinout.hpp"
+#include "Hardware/CAN/Can.hpp" // Replace with implementation
 #include "Hardware/Analog/Analog.hpp"
 #include "Hardware/Relay/Relay.hpp"
 #include "Hardware/DAC/MCP4922.hpp"
-#include "State/ControllerState.hpp"
-#include "Core/Orchestrator.hpp"
+#include "State/StateManager.hpp"
 
+#include "Output/CanOutput.hpp"
+#include "Output/SerialOutput.hpp"
+
+#include "pico/multicore.h"
+
+#include <iostream>
+
+// Define main worker functions
+void handleCommunication();
+
+void handleMainTasks();
+
+// Define global variables
+Can can;
+Analog adc;
+MCP4922 dac(spi0, PlatformPinout::DAC_CS_PIN, PlatformPinout::DAC_TX_PIN, PlatformPinout::DAC_SCK_PIN, PlatformPinout::DAC_LDAC_PIN);
+Relay relay(PlatformPinout::GPIO_RELAY_PIN);
+Relay led(PlatformPinout::LED_PIN);
+StateManager manager;
+
+/**
+ *
+ * @return
+ */
 int main() {
     /**
      * Initialize hardware
@@ -13,49 +37,102 @@ int main() {
     // Pico
     stdio_init_all();
 
-    // CAN
-    Can can; // TODO: Implement interface
+   // CAN
+   // TODO
 
-    // Analog
-    Analog adc;
-    adc.init(); // TODO: Refactor & make generic interface
+   // Analog
+   adc.init(); // TODO: Refactor & make generic interface
 
-    // DAC
-    MCP4922 dac(spi0, PlatformPinout::DAC_CS_PIN, PlatformPinout::DAC_TX_PIN, PlatformPinout::DAC_SCK_PIN, PlatformPinout::DAC_LDAC_PIN);
-    dac.init();
+   // DAC
+   dac.init();
 
-    // Relay
-    Relay relay(PlatformPinout::GPIO_RELAY_PIN);
-    relay.init();
+   // Relay
+   relay.init();
 
-    // LED
-    Relay led(PlatformPinout::LED_PIN);
-    led.init();
-    led.setState(true);
+   // LED
+   Relay led(PlatformPinout::LED_PIN);
+   led.init();
+   led.setState(true);
 
-    /**
-     * Global variables
-     */
+   /**
+    * Global variables
+    */
 
-    // Controller State
-    ControllerState state;
+   // Controller State
+   // TODO
 
-    // Error handler
-    // TODO: Implement
+   // Error handler
+   // TODO: Implement
 
     /**
-     * Orchestrator
+     * Orchestration
      */
 
-    // Initialize orchestrator
-    Orchestrator orchestrator(&state, &can, &adc, &dac, &relay);
-    orchestrator.init();
+    // Run auxiliary orchestrator on Core #1 (CAN + USB communication)
+    multicore_launch_core1(handleCommunication);
 
-    // Run auxiliary orchestrator thread (CAN + USB communication)
-    orchestrator.handleCommunication();
-
-    // Run main orchestrator thread (calculations, safety, outputs)
-    orchestrator.handleMainTasks();
+    // Run main orchestrator on Core #0 (calculations, safety, outputs)
+    handleMainTasks();
 
     return 0;
+}
+
+/**
+ * Main orchestrator (calculations, safety, outputs)
+ */
+void handleMainTasks() {
+    // Infinite worker loop
+    while (true) {
+        // Get state
+        auto state = manager.getStateSnapshot();
+
+        // Monitor driver's torque
+        // TODO: Future
+
+        // Calculations
+        // TODO: Implement in the future angle to torque converter
+
+        // Safety features
+        // TODO: Future
+
+        // Dac control
+        // TODO
+
+        // Relay
+        // TODO
+
+        // Watchdog?
+        // TODO: Future
+    }
+}
+
+/**
+ * Auxiliary orchestrator (CAN + USB communication)
+ */
+void handleCommunication() {
+    // Register output handlers
+    CanOutput canOutput(can);
+    SerialOutput serialOutput;
+
+    // Infinite worker loop
+    while (true) {
+        // Get state
+        auto state = manager.getStateSnapshot();
+
+        // Read CAN
+
+        // Handle frame
+
+        //      (update state - active/mode/setpoint)
+
+        //      (firmware update - call reset_usb_boot(0, 0) )
+
+        //      (calibrate)
+
+        //      (frame safety analysis)
+
+        // Outputs (Serial, CAN)
+        canOutput.output(state);
+        serialOutput.output(state);
+    }
 }

@@ -21,15 +21,13 @@ add_executable(eps4400-pico
         # Main executable
         src/main.cpp
 
+        src/State/StateManager.cpp
+
         src/Hardware/Analog/Analog.cpp
         src/Hardware/DAC/MCP4922.cpp
         src/Hardware/Relay/Relay.cpp
-        src/Core/Orchestrator.cpp
 
         src/Output/Output.cpp
-        src/Output/SerialOutput.cpp
-        src/Output/CanOutput.cpp
-
         )
 
 # Add libs
@@ -51,7 +49,6 @@ target_link_libraries(eps4400-pico
         hardware_pwm
         hardware_flash
         hardware_sync
-
         )
 
 pico_add_extra_outputs(eps4400-pico)
