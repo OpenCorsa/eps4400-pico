@@ -3,10 +3,13 @@
 #include "ControlMode.hpp"
 
 class ControllerState {
-protected:
+public:
 
     // Operating state
     bool active;
+    bool suspendRequested;
+
+    // Control mode
     ControlMode mode;
 
     // Torque
