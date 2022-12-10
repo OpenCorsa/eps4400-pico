@@ -27,6 +27,10 @@ add_executable(eps4400-pico
         src/Hardware/DAC/MCP4922.cpp
         src/Hardware/Relay/Relay.cpp
 
+        src/Hardware/CAN/MCP2517FD.cpp
+        src/Hardware/CAN/mcp2518fd/mcp_can_fd.cpp
+        src/Hardware/CAN/mcp2518fd/mcp2518fd_can.cpp
+
         src/Output/Output.cpp
         )
 
