@@ -3,7 +3,7 @@
 #include "Output.hpp"
 
 #define FMT_HEADER_ONLY
-#include "../../lib/fmt/include/fmt/format.h"
+#include "../../libs/fmt/include/fmt/format.h"
 
 class JsonFormatter : public Output {
 protected:
