@@ -8,6 +8,14 @@
 #include "boards/pico.h"
 
 class MCP4922 : public Dac {
+protected:
+    spi_inst_t *spi;
+    uint32_t spiClock;
+
+    uint8_t cs;
+    uint8_t tx;
+    uint8_t sck;
+    uint8_t latch;
 
 public:
     MCP4922(
@@ -23,12 +31,5 @@ public:
 
     void set(uint16_t channelA, uint16_t channelB);
 
-private:
-    spi_inst_t *spi;
-    uint32_t spiClock;
 
-    uint8_t cs;
-    uint8_t tx;
-    uint8_t sck;
-    uint8_t latch;
 };
